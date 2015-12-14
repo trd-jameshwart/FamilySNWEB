@@ -1,14 +1,17 @@
 <?php
 
 require_once('DB_Config.php');
-
+/*
+	Source Link: https://github.com/jameshwartlopez/bosphp/blob/1b43ad8785aac71ff8b19d653be5d32c5367dc8b/framework/DB.php
+*/
 class DB{
 	public 		$pdo,
 			   	$result,
 			   	$lastInsertId,
 			   	$tables  = array(),
 			   	$columnsName = array(),
-			    $columnsValues = array();	
+			    $columnsValues = array(),
+			    $rowCount =0;	
 
 	protected 	$dns,
 				$query='',
@@ -140,19 +143,25 @@ class DB{
 				$this->result = $this->statement->execute($this->columnsValues);
 				if($this->result){
 					$this->result = $this->statement->fetchAll();
+					$this->rowCount = count($this->result);
 				}
 				
 			}else{
 				$this->statement = $this->pdo->prepare($this->query);
 				$this->result =	$this->statement->execute($this->columnsValues);
-				$this->lastInsertId = $this->pdo->lastInsertId();
+				$this->rowCount = $this->statement->rowCount();
+				if(preg_match('/^INSERT/i',$this->query)){
+					$this->lastInsertId = $this->pdo->lastInsertId();
+				}
+				
+				
 			}
 			$this->sql= $this->query;
 			$this->resetAttributes();
 		}catch(PDOExceptions $e){
 			throw new Exception("Error In Connecting to Database: ".$e->getMessage(), 1);
 		}
-		return $this->result;
+		return $this;
 	}
 	private function resetAttributes(){
 		if(isset($this->where_query) || !empty(trim($this->where_query))){
