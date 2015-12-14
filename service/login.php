@@ -13,7 +13,13 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 		$user = $db->select('tbl_users',$columns)->where("email =",$email)->and_where("password =",$pword)->execute();
 		
 		if($db->rowCount == 1){
-			echo json_encode(array("OK"=>true));	
+			$result = array(
+				array("OK"=>true),
+				$user->result[0]
+			);
+
+			echo json_encode($result);	
+			
 		}else {
 			echo json_encode(array("error"=>"Login Error"));
 		}
