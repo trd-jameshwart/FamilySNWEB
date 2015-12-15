@@ -9,7 +9,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 	$pword = $_POST['password'];
 
 	if($email !=""  && $pword != ""){
-		$columns = array('id','email');
+		$columns = array('id','email','cover_photo','profile_photo');
 		$user = $db->select('tbl_users',$columns)->where("email =",$email)->and_where("password =",$pword)->execute();
 		
 		if($db->rowCount == 1){
