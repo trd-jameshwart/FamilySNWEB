@@ -8,3 +8,4 @@ define('UPLOADS_URL',$http.$_SERVER['HTTP_HOST'].'/uploads/');
 
 $fileInfo = pathinfo(__FILE__);
 define('UPLOADS_DIR',$fileInfo['dirname'].'/uploads/');
+

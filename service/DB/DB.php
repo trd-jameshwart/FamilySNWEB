@@ -108,6 +108,7 @@ class DB{
 			$this->where_query .=' AND '.$col_withoperator.' ? ';
 		}
 		array_push($this->columnsValues, $value);
+		//echo '<pre>column and values is-> ';print_r($this->columnsValues);echo '</pre>';
 		return $this;
 	}
 	//This method will be updated later
@@ -138,11 +139,14 @@ class DB{
 			}
 			
 			if(preg_match('/^SELECT/i',$this->query)){
-			
+				
 				$this->statement = $this->pdo->prepare($this->query);
 				$this->result = $this->statement->execute($this->columnsValues);
+				 //echo 'James resutl ->'.$this->result.'<- the resutl of query->';
 				if($this->result){
+
 					$this->result = $this->statement->fetchAll();
+					//print_r($this->result);
 					$this->rowCount = count($this->result);
 				}
 				
@@ -154,10 +158,10 @@ class DB{
 					$this->lastInsertId = $this->pdo->lastInsertId();
 				}
 				
-				
+				// $this->sql= $this->query;
+				// $this->resetAttributes();
 			}
-			$this->sql= $this->query;
-			$this->resetAttributes();
+			
 		}catch(PDOExceptions $e){
 			throw new Exception("Error In Connecting to Database: ".$e->getMessage(), 1);
 		}

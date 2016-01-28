@@ -30,6 +30,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['c_passwo
 				'email'		=> $email,
 				'password'	=> $password
 			);
+			$db = new DB();
 			$dbInsert = $db->insert('tbl_users',$columnAndValues)->execute();
 			if($dbInsert->result){
 				$result = json_encode(array("OK"=>$dbInsert->result));

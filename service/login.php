@@ -20,14 +20,14 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
 			echo json_encode($result);	
 			
-		}else {
-			echo json_encode(array("error"=>"Login Error"));
+		} else {
+			echo json_encode(array("error"=>"Username and password is incorrect"));
 		}
 
 	}else{
-		echo json_encode(array("error"=>"Please enter email and password.!"));
+		echo json_encode(array("error"=>"Please enter email and password.james1!"));
 	}
 
 }else{
-	echo json_encode(array("error"=>"Please enter email and password.!"));
+	echo json_encode(array("error"=>"Please enter email and password!"));
 }
